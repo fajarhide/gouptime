@@ -1,2 +1,5 @@
 # gouptime
-Golang for monitoring uptime
+Monitoring uptime with golang
+
+## MAINTAINER
+fajarhide (https://github.com/fajarhide)
