@@ -13,9 +13,9 @@ Monitoring uptime golang notify to Telegram
 `go get gopkg.in/tucnak/telebot.v2`
 
 ### Usage
-1. `bash start.sh`
+1. `bash start.sh {{name_service}}`
 2. `/start` Starting Monitoring
-3. `/stop` Stoping Monitoring for checking issue
+3. `/stop` Stopping Monitoring for checking issue
 
 ### Maintainer
 fajarhide (https://github.com/fajarhide)
