@@ -36,15 +36,15 @@ func main() {
 
 	b.Handle("/start", func(m *tb.Message) {
 		// fmt.Println("Start")
+		b.Send(m.Sender, "Starting Monitoring")
 		ok = true
 		loop()
-		b.Send(m.Sender, "Start")
 	})
 
 	b.Handle("/stop", func(m *tb.Message) {
 		// fmt.Println("Stop")
 		ok = false
-		b.Send(m.Sender, "Stop")
+		b.Send(m.Sender, "Stop Monitoring ASAP fixing")
 	})
 	b.Start()
 
