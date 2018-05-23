@@ -19,7 +19,7 @@ func loop() {
 	for {
 		if ok == true {
 			checking()
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 5)
 		}
 	}
 }
@@ -27,7 +27,7 @@ func loop() {
 func main() {
 	b, err := tb.NewBot(tb.Settings{
 		Token:  "{{TOKEN}}",
-		Poller: &tb.LongPoller{Timeout: 2 * time.Second},
+		Poller: &tb.LongPoller{Timeout: 5 * time.Hour},
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -82,5 +82,6 @@ func checking() {
 			req.Header.Set("Content-Type", "application/json")
 			client.Do(req)
 		}
+		time.Sleep(time.Second * 2)
 	}
 }
