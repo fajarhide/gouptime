@@ -23,3 +23,4 @@ Health checking downtime get notified to Telegram
 
 ### Maintainer
 fajarhide (https://github.com/fajarhide)
+- MIT License
