@@ -8,10 +8,17 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	for {
 		checking()
 	}
@@ -32,7 +39,9 @@ func checking() {
 			log.Fatal(err)
 		}
 		if resp.StatusCode != 200 && resp.StatusCode != 301 && resp.StatusCode != 302 && resp.StatusCode != 000 && resp.StatusCode != 405 {
-			request_url := "https://api.telegram.org/bot{{TOKEN}}/sendMessage?chat_id={{USERID}}"
+			token := os.Getenv("TOKEN")
+			uid := os.Getenv("USERID")
+			webhook := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage?chat_id=%s", token, uid)
 			client := &http.Client{}
 			t1 := time.Now()
 			duration := t1.Sub(t0).String()
@@ -42,13 +51,15 @@ func checking() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			req, err := http.NewRequest("POST", request_url, bytes.NewBuffer(jsonStr))
+			req, err := http.NewRequest("POST", webhook, bytes.NewBuffer(jsonStr))
 			if err != nil {
 				fmt.Println(err)
 			}
 			req.Header.Set("Content-Type", "application/json")
 			client.Do(req)
 		}
-		time.Sleep(time.Second * 60)
+		sec := os.Getenv("INTERVAL")
+		i, err := strconv.Atoi(sec)
+		time.Sleep(time.Second * time.Duration(i))
 	}
 }
