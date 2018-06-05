@@ -9,45 +9,12 @@ import (
 	"net/http"
 	"os"
 	"time"
-
-	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-var ok bool = true
-
-func loop() {
-	for {
-		if ok == true {
-			checking()
-			time.Sleep(time.Second * 5)
-		}
-	}
-}
-
 func main() {
-	b, err := tb.NewBot(tb.Settings{
-		Token:  "{{TOKEN}}",
-		Poller: &tb.LongPoller{Timeout: 5 * time.Hour},
-	})
-	if err != nil {
-		log.Fatal(err)
-		return
+	for {
+		checking()
 	}
-
-	b.Handle("/start", func(m *tb.Message) {
-		// fmt.Println("Start")
-		b.Send(m.Sender, "Starting Monitoring")
-		ok = true
-		loop()
-	})
-
-	b.Handle("/stop", func(m *tb.Message) {
-		// fmt.Println("Stop")
-		ok = false
-		b.Send(m.Sender, "Stop Monitoring ASAP fixing")
-	})
-	b.Start()
-
 }
 
 func checking() {
@@ -82,6 +49,6 @@ func checking() {
 			req.Header.Set("Content-Type", "application/json")
 			client.Do(req)
 		}
-		time.Sleep(time.Second * 2)
+		time.Sleep(time.Second * 60)
 	}
 }
